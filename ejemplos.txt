@@ -1,0 +1,29 @@
+-- Ejemplo 1: Seleccionar todas las columnas
+SELECT * FROM 'employees.csv'; (Funciona bien)
+
+-- Ejemplo 2: Seleccionar columnas específicas
+SELECT name, department FROM 'employees.csv'; (Funciona bien)
+
+-- Ejemplo 3: Filtrar empleados mayores de 30 años
+SELECT * FROM 'employees.csv' WHERE age > 30; (Funciona bien)
+
+-- Ejemplo 4: Insertar un nuevo empleado
+INSERT INTO 'employees.csv' VALUES (27, 'Patrick', 37, 'HR', 54500, '2021-05-10', 9); (Funciona bien)
+
+-- Ejemplo 5: Actualizar el salario de los empleados del departamento HR
+UPDATE 'employees.csv' SET salary = 58000 WHERE department = 'HR'; (Funciona bien)
+
+-- Ejemplo 6: Actualizar la puntuación de desempeño de un empleado
+UPDATE 'employees.csv' SET performance_score = 1 WHERE name = 'John'; (Funciona bien)
+
+-- Ejemplo 7: Eliminar empleados del departamento Sales
+DELETE FROM 'employees.csv' WHERE department = 'Sales'; (Funciona bien)
+
+-- Ejemplo 8: Seleccionar empleados contratados después de 2019
+SELECT * FROM 'employees.csv' WHERE hire_date > '2019-01-01'; (Funciona bien)
+
+-- Ejemplo 9: Seleccionar empleados con puntuación de desempeño mayor a 8
+SELECT name, performance_score FROM 'employees.csv' WHERE performance_score > 8; (Funciona bien)
+
+-- Ejemplo 10: Eliminar todos los empleados
+DELETE FROM 'employees.csv'; (Funciona bien)

@@ -1,0 +1,778 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> statement
+Rule 1     statement -> SELECT columns FROM table WHERE conditions eos
+Rule 2     statement -> SELECT columns FROM table eos
+Rule 3     statement -> SELECT ASTERISK FROM table WHERE conditions eos
+Rule 4     statement -> SELECT ASTERISK FROM table eos
+Rule 5     statement -> INSERT INTO table VALUES LPAREN values RPAREN eos
+Rule 6     statement -> UPDATE table SET set_clauses WHERE conditions eos
+Rule 7     statement -> UPDATE table SET set_clauses eos
+Rule 8     statement -> DELETE FROM table WHERE conditions eos
+Rule 9     statement -> DELETE FROM table eos
+Rule 10    columns -> columns COMMA column
+Rule 11    columns -> column
+Rule 12    column -> IDENTIFIER
+Rule 13    table -> STRING
+Rule 14    values -> values COMMA value
+Rule 15    values -> value
+Rule 16    value -> NUMBER
+Rule 17    value -> STRING
+Rule 18    set_clauses -> set_clauses COMMA set_clause
+Rule 19    set_clauses -> set_clause
+Rule 20    set_clause -> column EQUALS value
+Rule 21    conditions -> conditions logical condition
+Rule 22    conditions -> condition
+Rule 23    condition -> column EQUALS value
+Rule 24    condition -> column GREATER value
+Rule 25    condition -> column LESS value
+Rule 26    logical -> AND
+Rule 27    logical -> OR
+Rule 28    eos -> SEMICOLON
+
+Terminals, with rules where they appear
+
+AND                  : 26
+ASTERISK             : 3 4
+COMMA                : 10 14 18
+DELETE               : 8 9
+EQUALS               : 20 23
+FROM                 : 1 2 3 4 8 9
+GREATER              : 24
+IDENTIFIER           : 12
+INSERT               : 5
+INTO                 : 5
+LESS                 : 25
+LPAREN               : 5
+NUMBER               : 16
+OR                   : 27
+RPAREN               : 5
+SELECT               : 1 2 3 4
+SEMICOLON            : 28
+SET                  : 6 7
+STRING               : 13 17
+UPDATE               : 6 7
+VALUES               : 5
+WHERE                : 1 3 6 8
+error                : 
+
+Nonterminals, with rules where they appear
+
+column               : 10 11 20 23 24 25
+columns              : 1 2 10
+condition            : 21 22
+conditions           : 1 3 6 8 21
+eos                  : 1 2 3 4 5 6 7 8 9
+logical              : 21
+set_clause           : 18 19
+set_clauses          : 6 7 18
+statement            : 0
+table                : 1 2 3 4 5 6 7 8 9
+value                : 14 15 20 23 24 25
+values               : 5 14
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . statement
+    (1) statement -> . SELECT columns FROM table WHERE conditions eos
+    (2) statement -> . SELECT columns FROM table eos
+    (3) statement -> . SELECT ASTERISK FROM table WHERE conditions eos
+    (4) statement -> . SELECT ASTERISK FROM table eos
+    (5) statement -> . INSERT INTO table VALUES LPAREN values RPAREN eos
+    (6) statement -> . UPDATE table SET set_clauses WHERE conditions eos
+    (7) statement -> . UPDATE table SET set_clauses eos
+    (8) statement -> . DELETE FROM table WHERE conditions eos
+    (9) statement -> . DELETE FROM table eos
+
+    SELECT          shift and go to state 2
+    INSERT          shift and go to state 3
+    UPDATE          shift and go to state 4
+    DELETE          shift and go to state 5
+
+    statement                      shift and go to state 1
+
+state 1
+
+    (0) S' -> statement .
+
+
+
+state 2
+
+    (1) statement -> SELECT . columns FROM table WHERE conditions eos
+    (2) statement -> SELECT . columns FROM table eos
+    (3) statement -> SELECT . ASTERISK FROM table WHERE conditions eos
+    (4) statement -> SELECT . ASTERISK FROM table eos
+    (10) columns -> . columns COMMA column
+    (11) columns -> . column
+    (12) column -> . IDENTIFIER
+
+    ASTERISK        shift and go to state 7
+    IDENTIFIER      shift and go to state 9
+
+    columns                        shift and go to state 6
+    column                         shift and go to state 8
+
+state 3
+
+    (5) statement -> INSERT . INTO table VALUES LPAREN values RPAREN eos
+
+    INTO            shift and go to state 10
+
+
+state 4
+
+    (6) statement -> UPDATE . table SET set_clauses WHERE conditions eos
+    (7) statement -> UPDATE . table SET set_clauses eos
+    (13) table -> . STRING
+
+    STRING          shift and go to state 12
+
+    table                          shift and go to state 11
+
+state 5
+
+    (8) statement -> DELETE . FROM table WHERE conditions eos
+    (9) statement -> DELETE . FROM table eos
+
+    FROM            shift and go to state 13
+
+
+state 6
+
+    (1) statement -> SELECT columns . FROM table WHERE conditions eos
+    (2) statement -> SELECT columns . FROM table eos
+    (10) columns -> columns . COMMA column
+
+    FROM            shift and go to state 14
+    COMMA           shift and go to state 15
+
+
+state 7
+
+    (3) statement -> SELECT ASTERISK . FROM table WHERE conditions eos
+    (4) statement -> SELECT ASTERISK . FROM table eos
+
+    FROM            shift and go to state 16
+
+
+state 8
+
+    (11) columns -> column .
+
+    FROM            reduce using rule 11 (columns -> column .)
+    COMMA           reduce using rule 11 (columns -> column .)
+
+
+state 9
+
+    (12) column -> IDENTIFIER .
+
+    FROM            reduce using rule 12 (column -> IDENTIFIER .)
+    COMMA           reduce using rule 12 (column -> IDENTIFIER .)
+    EQUALS          reduce using rule 12 (column -> IDENTIFIER .)
+    GREATER         reduce using rule 12 (column -> IDENTIFIER .)
+    LESS            reduce using rule 12 (column -> IDENTIFIER .)
+
+
+state 10
+
+    (5) statement -> INSERT INTO . table VALUES LPAREN values RPAREN eos
+    (13) table -> . STRING
+
+    STRING          shift and go to state 12
+
+    table                          shift and go to state 17
+
+state 11
+
+    (6) statement -> UPDATE table . SET set_clauses WHERE conditions eos
+    (7) statement -> UPDATE table . SET set_clauses eos
+
+    SET             shift and go to state 18
+
+
+state 12
+
+    (13) table -> STRING .
+
+    SET             reduce using rule 13 (table -> STRING .)
+    VALUES          reduce using rule 13 (table -> STRING .)
+    WHERE           reduce using rule 13 (table -> STRING .)
+    SEMICOLON       reduce using rule 13 (table -> STRING .)
+
+
+state 13
+
+    (8) statement -> DELETE FROM . table WHERE conditions eos
+    (9) statement -> DELETE FROM . table eos
+    (13) table -> . STRING
+
+    STRING          shift and go to state 12
+
+    table                          shift and go to state 19
+
+state 14
+
+    (1) statement -> SELECT columns FROM . table WHERE conditions eos
+    (2) statement -> SELECT columns FROM . table eos
+    (13) table -> . STRING
+
+    STRING          shift and go to state 12
+
+    table                          shift and go to state 20
+
+state 15
+
+    (10) columns -> columns COMMA . column
+    (12) column -> . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 9
+
+    column                         shift and go to state 21
+
+state 16
+
+    (3) statement -> SELECT ASTERISK FROM . table WHERE conditions eos
+    (4) statement -> SELECT ASTERISK FROM . table eos
+    (13) table -> . STRING
+
+    STRING          shift and go to state 12
+
+    table                          shift and go to state 22
+
+state 17
+
+    (5) statement -> INSERT INTO table . VALUES LPAREN values RPAREN eos
+
+    VALUES          shift and go to state 23
+
+
+state 18
+
+    (6) statement -> UPDATE table SET . set_clauses WHERE conditions eos
+    (7) statement -> UPDATE table SET . set_clauses eos
+    (18) set_clauses -> . set_clauses COMMA set_clause
+    (19) set_clauses -> . set_clause
+    (20) set_clause -> . column EQUALS value
+    (12) column -> . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 9
+
+    set_clauses                    shift and go to state 24
+    set_clause                     shift and go to state 25
+    column                         shift and go to state 26
+
+state 19
+
+    (8) statement -> DELETE FROM table . WHERE conditions eos
+    (9) statement -> DELETE FROM table . eos
+    (28) eos -> . SEMICOLON
+
+    WHERE           shift and go to state 27
+    SEMICOLON       shift and go to state 29
+
+    eos                            shift and go to state 28
+
+state 20
+
+    (1) statement -> SELECT columns FROM table . WHERE conditions eos
+    (2) statement -> SELECT columns FROM table . eos
+    (28) eos -> . SEMICOLON
+
+    WHERE           shift and go to state 30
+    SEMICOLON       shift and go to state 29
+
+    eos                            shift and go to state 31
+
+state 21
+
+    (10) columns -> columns COMMA column .
+
+    FROM            reduce using rule 10 (columns -> columns COMMA column .)
+    COMMA           reduce using rule 10 (columns -> columns COMMA column .)
+
+
+state 22
+
+    (3) statement -> SELECT ASTERISK FROM table . WHERE conditions eos
+    (4) statement -> SELECT ASTERISK FROM table . eos
+    (28) eos -> . SEMICOLON
+
+    WHERE           shift and go to state 32
+    SEMICOLON       shift and go to state 29
+
+    eos                            shift and go to state 33
+
+state 23
+
+    (5) statement -> INSERT INTO table VALUES . LPAREN values RPAREN eos
+
+    LPAREN          shift and go to state 34
+
+
+state 24
+
+    (6) statement -> UPDATE table SET set_clauses . WHERE conditions eos
+    (7) statement -> UPDATE table SET set_clauses . eos
+    (18) set_clauses -> set_clauses . COMMA set_clause
+    (28) eos -> . SEMICOLON
+
+    WHERE           shift and go to state 35
+    COMMA           shift and go to state 37
+    SEMICOLON       shift and go to state 29
+
+    eos                            shift and go to state 36
+
+state 25
+
+    (19) set_clauses -> set_clause .
+
+    WHERE           reduce using rule 19 (set_clauses -> set_clause .)
+    COMMA           reduce using rule 19 (set_clauses -> set_clause .)
+    SEMICOLON       reduce using rule 19 (set_clauses -> set_clause .)
+
+
+state 26
+
+    (20) set_clause -> column . EQUALS value
+
+    EQUALS          shift and go to state 38
+
+
+state 27
+
+    (8) statement -> DELETE FROM table WHERE . conditions eos
+    (21) conditions -> . conditions logical condition
+    (22) conditions -> . condition
+    (23) condition -> . column EQUALS value
+    (24) condition -> . column GREATER value
+    (25) condition -> . column LESS value
+    (12) column -> . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 9
+
+    conditions                     shift and go to state 39
+    condition                      shift and go to state 40
+    column                         shift and go to state 41
+
+state 28
+
+    (9) statement -> DELETE FROM table eos .
+
+    $end            reduce using rule 9 (statement -> DELETE FROM table eos .)
+
+
+state 29
+
+    (28) eos -> SEMICOLON .
+
+    $end            reduce using rule 28 (eos -> SEMICOLON .)
+
+
+state 30
+
+    (1) statement -> SELECT columns FROM table WHERE . conditions eos
+    (21) conditions -> . conditions logical condition
+    (22) conditions -> . condition
+    (23) condition -> . column EQUALS value
+    (24) condition -> . column GREATER value
+    (25) condition -> . column LESS value
+    (12) column -> . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 9
+
+    conditions                     shift and go to state 42
+    condition                      shift and go to state 40
+    column                         shift and go to state 41
+
+state 31
+
+    (2) statement -> SELECT columns FROM table eos .
+
+    $end            reduce using rule 2 (statement -> SELECT columns FROM table eos .)
+
+
+state 32
+
+    (3) statement -> SELECT ASTERISK FROM table WHERE . conditions eos
+    (21) conditions -> . conditions logical condition
+    (22) conditions -> . condition
+    (23) condition -> . column EQUALS value
+    (24) condition -> . column GREATER value
+    (25) condition -> . column LESS value
+    (12) column -> . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 9
+
+    conditions                     shift and go to state 43
+    condition                      shift and go to state 40
+    column                         shift and go to state 41
+
+state 33
+
+    (4) statement -> SELECT ASTERISK FROM table eos .
+
+    $end            reduce using rule 4 (statement -> SELECT ASTERISK FROM table eos .)
+
+
+state 34
+
+    (5) statement -> INSERT INTO table VALUES LPAREN . values RPAREN eos
+    (14) values -> . values COMMA value
+    (15) values -> . value
+    (16) value -> . NUMBER
+    (17) value -> . STRING
+
+    NUMBER          shift and go to state 46
+    STRING          shift and go to state 47
+
+    values                         shift and go to state 44
+    value                          shift and go to state 45
+
+state 35
+
+    (6) statement -> UPDATE table SET set_clauses WHERE . conditions eos
+    (21) conditions -> . conditions logical condition
+    (22) conditions -> . condition
+    (23) condition -> . column EQUALS value
+    (24) condition -> . column GREATER value
+    (25) condition -> . column LESS value
+    (12) column -> . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 9
+
+    conditions                     shift and go to state 48
+    condition                      shift and go to state 40
+    column                         shift and go to state 41
+
+state 36
+
+    (7) statement -> UPDATE table SET set_clauses eos .
+
+    $end            reduce using rule 7 (statement -> UPDATE table SET set_clauses eos .)
+
+
+state 37
+
+    (18) set_clauses -> set_clauses COMMA . set_clause
+    (20) set_clause -> . column EQUALS value
+    (12) column -> . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 9
+
+    set_clause                     shift and go to state 49
+    column                         shift and go to state 26
+
+state 38
+
+    (20) set_clause -> column EQUALS . value
+    (16) value -> . NUMBER
+    (17) value -> . STRING
+
+    NUMBER          shift and go to state 46
+    STRING          shift and go to state 47
+
+    value                          shift and go to state 50
+
+state 39
+
+    (8) statement -> DELETE FROM table WHERE conditions . eos
+    (21) conditions -> conditions . logical condition
+    (28) eos -> . SEMICOLON
+    (26) logical -> . AND
+    (27) logical -> . OR
+
+    SEMICOLON       shift and go to state 29
+    AND             shift and go to state 53
+    OR              shift and go to state 54
+
+    eos                            shift and go to state 51
+    logical                        shift and go to state 52
+
+state 40
+
+    (22) conditions -> condition .
+
+    SEMICOLON       reduce using rule 22 (conditions -> condition .)
+    AND             reduce using rule 22 (conditions -> condition .)
+    OR              reduce using rule 22 (conditions -> condition .)
+
+
+state 41
+
+    (23) condition -> column . EQUALS value
+    (24) condition -> column . GREATER value
+    (25) condition -> column . LESS value
+
+    EQUALS          shift and go to state 55
+    GREATER         shift and go to state 56
+    LESS            shift and go to state 57
+
+
+state 42
+
+    (1) statement -> SELECT columns FROM table WHERE conditions . eos
+    (21) conditions -> conditions . logical condition
+    (28) eos -> . SEMICOLON
+    (26) logical -> . AND
+    (27) logical -> . OR
+
+    SEMICOLON       shift and go to state 29
+    AND             shift and go to state 53
+    OR              shift and go to state 54
+
+    eos                            shift and go to state 58
+    logical                        shift and go to state 52
+
+state 43
+
+    (3) statement -> SELECT ASTERISK FROM table WHERE conditions . eos
+    (21) conditions -> conditions . logical condition
+    (28) eos -> . SEMICOLON
+    (26) logical -> . AND
+    (27) logical -> . OR
+
+    SEMICOLON       shift and go to state 29
+    AND             shift and go to state 53
+    OR              shift and go to state 54
+
+    eos                            shift and go to state 59
+    logical                        shift and go to state 52
+
+state 44
+
+    (5) statement -> INSERT INTO table VALUES LPAREN values . RPAREN eos
+    (14) values -> values . COMMA value
+
+    RPAREN          shift and go to state 60
+    COMMA           shift and go to state 61
+
+
+state 45
+
+    (15) values -> value .
+
+    RPAREN          reduce using rule 15 (values -> value .)
+    COMMA           reduce using rule 15 (values -> value .)
+
+
+state 46
+
+    (16) value -> NUMBER .
+
+    RPAREN          reduce using rule 16 (value -> NUMBER .)
+    COMMA           reduce using rule 16 (value -> NUMBER .)
+    WHERE           reduce using rule 16 (value -> NUMBER .)
+    SEMICOLON       reduce using rule 16 (value -> NUMBER .)
+    AND             reduce using rule 16 (value -> NUMBER .)
+    OR              reduce using rule 16 (value -> NUMBER .)
+
+
+state 47
+
+    (17) value -> STRING .
+
+    RPAREN          reduce using rule 17 (value -> STRING .)
+    COMMA           reduce using rule 17 (value -> STRING .)
+    WHERE           reduce using rule 17 (value -> STRING .)
+    SEMICOLON       reduce using rule 17 (value -> STRING .)
+    AND             reduce using rule 17 (value -> STRING .)
+    OR              reduce using rule 17 (value -> STRING .)
+
+
+state 48
+
+    (6) statement -> UPDATE table SET set_clauses WHERE conditions . eos
+    (21) conditions -> conditions . logical condition
+    (28) eos -> . SEMICOLON
+    (26) logical -> . AND
+    (27) logical -> . OR
+
+    SEMICOLON       shift and go to state 29
+    AND             shift and go to state 53
+    OR              shift and go to state 54
+
+    eos                            shift and go to state 62
+    logical                        shift and go to state 52
+
+state 49
+
+    (18) set_clauses -> set_clauses COMMA set_clause .
+
+    WHERE           reduce using rule 18 (set_clauses -> set_clauses COMMA set_clause .)
+    COMMA           reduce using rule 18 (set_clauses -> set_clauses COMMA set_clause .)
+    SEMICOLON       reduce using rule 18 (set_clauses -> set_clauses COMMA set_clause .)
+
+
+state 50
+
+    (20) set_clause -> column EQUALS value .
+
+    WHERE           reduce using rule 20 (set_clause -> column EQUALS value .)
+    COMMA           reduce using rule 20 (set_clause -> column EQUALS value .)
+    SEMICOLON       reduce using rule 20 (set_clause -> column EQUALS value .)
+
+
+state 51
+
+    (8) statement -> DELETE FROM table WHERE conditions eos .
+
+    $end            reduce using rule 8 (statement -> DELETE FROM table WHERE conditions eos .)
+
+
+state 52
+
+    (21) conditions -> conditions logical . condition
+    (23) condition -> . column EQUALS value
+    (24) condition -> . column GREATER value
+    (25) condition -> . column LESS value
+    (12) column -> . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 9
+
+    condition                      shift and go to state 63
+    column                         shift and go to state 41
+
+state 53
+
+    (26) logical -> AND .
+
+    IDENTIFIER      reduce using rule 26 (logical -> AND .)
+
+
+state 54
+
+    (27) logical -> OR .
+
+    IDENTIFIER      reduce using rule 27 (logical -> OR .)
+
+
+state 55
+
+    (23) condition -> column EQUALS . value
+    (16) value -> . NUMBER
+    (17) value -> . STRING
+
+    NUMBER          shift and go to state 46
+    STRING          shift and go to state 47
+
+    value                          shift and go to state 64
+
+state 56
+
+    (24) condition -> column GREATER . value
+    (16) value -> . NUMBER
+    (17) value -> . STRING
+
+    NUMBER          shift and go to state 46
+    STRING          shift and go to state 47
+
+    value                          shift and go to state 65
+
+state 57
+
+    (25) condition -> column LESS . value
+    (16) value -> . NUMBER
+    (17) value -> . STRING
+
+    NUMBER          shift and go to state 46
+    STRING          shift and go to state 47
+
+    value                          shift and go to state 66
+
+state 58
+
+    (1) statement -> SELECT columns FROM table WHERE conditions eos .
+
+    $end            reduce using rule 1 (statement -> SELECT columns FROM table WHERE conditions eos .)
+
+
+state 59
+
+    (3) statement -> SELECT ASTERISK FROM table WHERE conditions eos .
+
+    $end            reduce using rule 3 (statement -> SELECT ASTERISK FROM table WHERE conditions eos .)
+
+
+state 60
+
+    (5) statement -> INSERT INTO table VALUES LPAREN values RPAREN . eos
+    (28) eos -> . SEMICOLON
+
+    SEMICOLON       shift and go to state 29
+
+    eos                            shift and go to state 67
+
+state 61
+
+    (14) values -> values COMMA . value
+    (16) value -> . NUMBER
+    (17) value -> . STRING
+
+    NUMBER          shift and go to state 46
+    STRING          shift and go to state 47
+
+    value                          shift and go to state 68
+
+state 62
+
+    (6) statement -> UPDATE table SET set_clauses WHERE conditions eos .
+
+    $end            reduce using rule 6 (statement -> UPDATE table SET set_clauses WHERE conditions eos .)
+
+
+state 63
+
+    (21) conditions -> conditions logical condition .
+
+    SEMICOLON       reduce using rule 21 (conditions -> conditions logical condition .)
+    AND             reduce using rule 21 (conditions -> conditions logical condition .)
+    OR              reduce using rule 21 (conditions -> conditions logical condition .)
+
+
+state 64
+
+    (23) condition -> column EQUALS value .
+
+    SEMICOLON       reduce using rule 23 (condition -> column EQUALS value .)
+    AND             reduce using rule 23 (condition -> column EQUALS value .)
+    OR              reduce using rule 23 (condition -> column EQUALS value .)
+
+
+state 65
+
+    (24) condition -> column GREATER value .
+
+    SEMICOLON       reduce using rule 24 (condition -> column GREATER value .)
+    AND             reduce using rule 24 (condition -> column GREATER value .)
+    OR              reduce using rule 24 (condition -> column GREATER value .)
+
+
+state 66
+
+    (25) condition -> column LESS value .
+
+    SEMICOLON       reduce using rule 25 (condition -> column LESS value .)
+    AND             reduce using rule 25 (condition -> column LESS value .)
+    OR              reduce using rule 25 (condition -> column LESS value .)
+
+
+state 67
+
+    (5) statement -> INSERT INTO table VALUES LPAREN values RPAREN eos .
+
+    $end            reduce using rule 5 (statement -> INSERT INTO table VALUES LPAREN values RPAREN eos .)
+
+
+state 68
+
+    (14) values -> values COMMA value .
+
+    RPAREN          reduce using rule 14 (values -> values COMMA value .)
+    COMMA           reduce using rule 14 (values -> values COMMA value .)
+
